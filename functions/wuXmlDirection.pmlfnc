@@ -1,0 +1,38 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuXmlDirection( !name is string, !point is direction ) is string
+
+	!ptx = !point.east
+	!pty = !point.north
+	!ptz = !point.up
+
+	!result =			'<'  + !name + '>'  
+	!result = !result + !ptx.string() + ','
+	!result = !result + !pty.string() + ','
+	!result = !result + !ptz.string()	
+	!result = !result + '</' + !name + '>' 
+
+	return !result
+
+endfunction

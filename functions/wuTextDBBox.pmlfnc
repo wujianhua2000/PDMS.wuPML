@@ -1,0 +1,50 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year, Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuTextDBBox( !entptr is DBref ) is string
+
+	!pzero	= !entptr.position
+	!pvect	= !entptr.orientation
+
+	!lenX	= !entptr.xlength
+	!lenY	= !entptr.ylength
+	!lenZ	= !entptr.zlength
+
+	!ptype	= !entptr.type
+
+	!result =			||
+	!result = !result + !!wuTextDBref(			!entptr.refno	)	+ |,  |
+	!result = !result + !!wuTextDBref(			!entptr.owner	)	+ |,  |
+
+	!result = !result + !!wuTextString(			!ptype			)	+ |,  |
+
+	!result = !result + !!wuTextPosition(		!pzero			)	+ |,  |
+	!result = !result + !!wuTextOrientation(	!pvect			)	+ |,  |
+
+	!result = !result + !!wuTextDouble(			!lenX			)	+ |,  |
+	!result = !result + !!wuTextDouble(			!lenY			)	+ |,  |
+	!result = !result + !!wuTextDouble(			!lenZ			)	+ |,  |
+
+	return !result
+
+endfunction

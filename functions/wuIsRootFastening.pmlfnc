@@ -1,0 +1,51 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year, Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+-- 
+-- Define function
+-- 
+
+DEFINE FUNCTION !!wuIsRootFastening( !entptr is DBREF ) IS BOOLEAN
+
+	!pass = FALSE
+
+	!vati = !entptr.OWNER
+
+	--	....................................................
+	!X = 1
+
+	DO !X
+
+		break	if ( !vati.type  EQ  'ZONE' )
+		break	if ( !vati.type  EQ  'SITE' )
+		
+		break	if ( !pass					)
+		
+		IF ( !vati.name.match( |-CE-| )  GT  1  ) THEN
+			!pass = TRUE
+		ENDIF
+
+		!vati = !vati.owner
+
+	ENDDO
+
+	RETURN	!pass
+
+ENDFUNCTION

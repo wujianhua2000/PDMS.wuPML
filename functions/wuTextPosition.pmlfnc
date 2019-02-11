@@ -1,0 +1,37 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuTextPosition( !point is position ) is string
+
+	!ptx = !point.east
+	!pty = !point.north
+	!ptz = !point.up
+	
+	!result =			||
+	!result = !result + !ptx.string() + ','
+	!result = !result + !pty.string() + ','
+	!result = !result + !ptz.string()
+
+	return !result
+
+endfunction

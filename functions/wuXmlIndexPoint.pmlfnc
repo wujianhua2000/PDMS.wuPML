@@ -1,0 +1,39 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuXmlIndexPoint( !name is string, !idx is real, !point is position ) is string
+
+	!ptx = !point.east
+	!pty = !point.north
+	!ptz = !point.up
+
+	!result =			'<'  + !name + '>'  
+	!result = !result + !ptx.string() + ','
+	!result = !result + !pty.string() + ','
+	!result = !result + !ptz.string() + ','
+	!result = !result + !idx.string()	
+	!result = !result + '</' + !name + '>' 
+
+	return !result
+
+endfunction

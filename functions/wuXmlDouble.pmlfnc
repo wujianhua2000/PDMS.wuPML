@@ -1,0 +1,32 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  1997 to Current Year  Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuXmlDouble( !name is string, !valu is real ) is string
+
+	!result =			|<|  + !name + |>|  
+	!result = !result + !valu.string()
+	!result = !result + |</| + !name + |>| 
+
+	return !result
+
+endfunction

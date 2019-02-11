@@ -1,0 +1,57 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year, Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+-- 
+--	原来的名字是	wuXmlVector
+-- 
+--	wuXmlOrientation
+-- 
+-- 
+define function !!wuTextOrientation( !vect is Orientation ) is string
+
+	!lnX = !vect.xdir()
+	!lnY = !vect.ydir()
+	!lnZ = !vect.zdir()
+
+	!result =			||  
+	
+	!result = !result + |"|
+	!result = !result + !lnx.east.string()	+ |;|
+	!result = !result + !lnx.north.string() + |;| 
+	!result = !result + !lnx.up.string()	
+	!result = !result + |"| + |, |	
+
+	!result = !result + |"|
+	!result = !result + !lny.east.string()  + |,| 
+	!result = !result + !lny.north.string() + |,| 
+	!result = !result + !lny.up.string()
+	!result = !result + |"| + |, |	
+
+	!result = !result + |"|
+	!result = !result + !lnz.east.string()  + |;| 
+	!result = !result + !lnz.north.string() + |;| 
+	!result = !result + !lnz.up.string()
+	!result = !result + |"|
+
+	return !result
+
+endfunction

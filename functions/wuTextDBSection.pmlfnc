@@ -1,0 +1,52 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year, Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+-- 
+-- Define function
+-- 
+
+define function !!wuTextDBSection( !entptr is DBref ) is string
+
+	!pzero	= !entptr.position.wrt( world )
+	!pvect	= !entptr.orientation.wrt( world )
+
+	!point1	= !entptr.posstart
+	!point2	= !entptr.posend
+	
+	!spname	= !entptr.spref.name
+
+	!result =			||
+	!result = !result + !!wuTextDBref(			!entptr.refno	)	+ |,  |
+	!result = !result + !!wuTextDBref(			!entptr.owner	)	+ |,  |
+
+	!result = !result + !!wuTextString(			!ptype			)	+ |,  |
+
+	!result = !result + !!wuTextString(			!spname			)	+ |,  |
+
+	!result = !result + !!wuTextOrientation(	!pvect			)	+ |,  |
+	!result = !result + !!wuTextPosition(		!pzero			)	+ |,  |
+	!result = !result + !!wuTextPosition(		!point1			)	+ |,  |
+	!result = !result + !!wuTextPosition(		!point2			)	+ |,  |
+
+	!result = !result + !!wuTextDouble(			!angle			)	+ |,  |
+
+	return	!result
+
+endfunction

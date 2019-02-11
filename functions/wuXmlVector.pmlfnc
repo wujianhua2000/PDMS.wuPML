@@ -1,0 +1,54 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year, Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuXmlVector( !name is string, !vect is Orientation ) is string
+
+	!lnX = !vect.xdir()
+	!lnY = !vect.ydir()
+	!lnZ = !vect.zdir()
+
+	!result =			|<| + !name + |>|  
+	
+	!result = !result + |<xline>|
+	!result = !result + !lnx.east.string()	+ |,|
+	!result = !result + !lnx.north.string() + |,| 
+	!result = !result + !lnx.up.string()
+	!result = !result + |</xline>|
+
+	!result = !result + |<yline>|
+	!result = !result + !lny.east.string()  + |,| 
+	!result = !result + !lny.north.string() + |,| 
+	!result = !result + !lny.up.string()
+	!result = !result + |</yline>|
+
+	!result = !result + |<zline>|
+	!result = !result + !lnz.east.string()  + |,| 
+	!result = !result + !lnz.north.string() + |,| 
+	!result = !result + !lnz.up.string()
+	!result = !result + |</zline>|
+
+	!result = !result + |</| + !name + |>| 
+
+	return !result
+
+endfunction

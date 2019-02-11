@@ -1,0 +1,28 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  1997 to Current Year  Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+
+-- Define function
+
+define function !!wuTextDouble( !valu is real ) is string
+
+	return !valu.string()
+
+endfunction
