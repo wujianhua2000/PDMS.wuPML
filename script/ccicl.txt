@@ -1,0 +1,57 @@
+
+/40-CW
+!pzone = !!ce
+
+/40-CC
+!psite = !!ce
+
+/4042-ER-NXS35-OP
+
+var !ncylist coll all ncyl for ce
+
+q var !ncylist.size()
+
+!nsize = !ncylist.size()
+
+$$	do  !idx  from  1  to  !nsize  by  1
+$$		!cyln1 = !ncylist[!idx].DBREF()
+$$		q var	!cyln1
+
+
+do  !idx  from  1  to  !nsize  by  1
+
+	!cyln1 = !ncylist[!idx].DBREF()
+	!post = !cyln1.position.wrt( world )
+	!vect = !cyln1.orientation.wrt( world )
+
+	$$	q var !post !vect
+
+	!vcX = !vect.alpha
+	!vcY = !vect.beta
+	!vcZ = !vect.gamma
+
+	!lnX = !vect.xdir()
+	!lnY = !vect.ydir()
+	!lnZ = !vect.zdir()
+
+	$$	q var !vcx  !vcy  !vcz	!lnx  !lny  !lnz
+
+	!enthei = !cyln1.height
+	!entdia = !cyln1.diameter
+
+	$$	q var !enthei !entdia
+
+enddo
+
+
+$(
+!curCE = !!ce
+
+!cvect = !curCE.orientation.wrt(world)
+
+q var !cvect.xdir()
+q var !cvect.ydir()
+q var !cvect.zdir()
+)$
+
+

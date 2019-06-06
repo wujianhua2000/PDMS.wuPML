@@ -1,0 +1,6 @@
+
+
+define function !!FuncXmlPoint( !name is string, !point is position )
+
+
+endfunction

@@ -1,0 +1,41 @@
+
+--	............................................................................
+
+!this	= !!CE
+
+!X = 1
+
+do !X
+	--	Ö±µ½ SITE ²ã
+	break	if ( !this.type  EQ  'SITE' )
+--	break	if ( !this.type  EQ  'ZONE' )
+
+	!!CE	= !!CE.owner
+	!this	= !!CE
+
+enddo
+
+--	............................................................................
+
+!swriter = object FILE( 'e:\W3D\list-alles-entity.txt' )
+!swriter.open( 'WRITE' )
+
+	!swriter.writerecord( |code| + |,| + |vati| + |,| + |name| + |,| + |type|  	)
+
+	!entptr = !!CE
+
+	!pname	= !entptr.name
+	!ptype	= !entptr.type
+	!pvati	= !entptr.owner.string()
+	!prefn	= !entptr.refno.string()
+
+	!swriter.writerecord( !prefn + |,| + !pvati + |,| + !pname + |,| + !ptype  	)
+
+do  !ptr  values  !entptr.members
+
+	!!wuTextEntityBasic( !ptr, !swriter )
+
+enddo
+
+!swriter.close( )
+

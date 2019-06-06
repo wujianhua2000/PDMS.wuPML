@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year  Wu JianHua
+--
+-- File:            
+--   Type:          Object Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Author:          
+-- Created:         
+--
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+
+-- Define object
+
+define object XmlNBOX
+
+  -- HIGH or LOW priority
+  member .priority is STRING
+
+  -- Name of Branch etc. to which ruleset applies
+  member .brName is STRING
+
+  -- Name of ruleset
+  member .ruleSetName is STRING
+
+  -- Apply to Branch / Pipe / Zone / Site
+  member .hierarchy is STRING
+
+endobject
+-- End of object definition for RULESAPPLY

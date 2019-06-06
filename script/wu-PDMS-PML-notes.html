@@ -1,0 +1,333 @@
+
+<html>
+
+<head>
+<style>
+
+body
+{
+	margin-left		: 100px		;
+	margin-right	: 100px		;
+}
+
+p
+{
+	padding-top		: 5px		;
+	padding-bottom	: 5px		;
+}
+
+table
+{
+	width			: 90%		;
+	border			: 1px dotted blue;
+	border-collapse	: collapse;
+}
+
+td
+{
+	border			: 1px dotted blue;
+	border-collapse	: collapse;
+	padding			: 5px;
+}
+
+td.first
+{
+	width			: 100px		;
+	vertical-align	: top		;
+	text-align		: center	;
+	font-weight		: bold		;
+}
+
+pre
+{
+	border				: 1px dotted green	;
+	margin				: 2px 0				;			
+	padding				: 0	  0				;			
+	font-size			: 90%				;
+	color				: blue				;
+	line-height			: 20px				;
+	auto-flow			: auto				;
+	display				: inline-block		;
+	/*
+	font-weight			: 200%				;
+	background-color	: blue				;
+	*/
+}
+</style>
+</head>
+
+<body>
+
+<pre>
+<code>
+	do  !X  from  10  to  100  by  10
+		
+		!total = !total + !X
+
+	enddo
+</code>
+</pre>
+
+<p>
+The enddo must be present at the end of the loop.
+
+The !X , from, to and by are optional, 
+
+therefore in its simplest form you may use:
+</p>
+
+<pre>
+<code>
+	do
+		commands block
+	enddo
+</code>
+</pre>
+
+<p>
+This will loop forever unless something in the commands block stops the loop 
+(see break and golabel below)
+</p>
+
+<h3>
+Element Purpose
+</h3>
+
+<table style="border:1px dotted blue;">
+<tr>
+	<td class="first">
+	!X 
+	</td>
+	<td>
+	A PML local (or global) variable that is automatically updated 
+	with the value of the loop-counter every time round the loop.
+	If you do not supply a loop variable, 
+	a hidden unnamed variable will be used for the counter. 
+	Note that the loop variable is REAL. 
+	PML will delete any pre-existing variable of the same name. 
+	After the loop has finished, 
+	the counter variable will retain the value it had last time through the loop. 
+	</td>
+</tr>
+
+<tr>
+	<td class="first">
+	from 
+	</td>
+	<td>
+	Defines the value of the counter for the first time round the loop.
+	If you do not give a value, it will default to 1.
+	</td>
+</tr>
+
+<tr>
+	<td class="first">
+	to
+	</td>
+	<td> 
+	Defines the value of the counter for the final time round the loop.
+	The default is infinity.
+	</td>
+</tr>
+
+<tr>
+	<td class="first">
+	by
+	</td>
+	<td>
+	Defines the step size (positive or negative) by which the
+	counter value is changed each time round the loop.
+	The default value is +1.
+	</td>
+</tr>
+</table>
+
+<h2>
+Stopping a DO loop: break and breakif
+</h2>
+
+<p>
+If the to option is not given, the command block within the loop will be repeated indefinitely.
+To stop looping, use either the break or break if command:
+</p>
+
+<pre>
+
+	do !Number
+		if (!Number GT 100) then
+			break
+		endif
+		!Result = !Result + !Number
+	enddo
+
+	do !Number
+		break if (!Number GT 100)
+		
+		!Result = !Result + !Number
+	enddo
+
+</pre>
+
+<p>
+Any expression may be used with the breakif command, even a PML Function, 
+provided the result is BOOLEAN (i.e. TRUE or FALSE).
+The ( ) parentheses are optional but recommended.
+The loop counter variable retains the value it had when the break from the loop occurred.
+</p>
+
+<h2>
+Skipping Commands in a DO Loop using Skip or Skip if
+</h2>
+
+<p>
+A skip command is used to go back to the beginning of the do loop, to repeat the loop with
+the next value of the do loop counter, omitting any commands following the skip command.
+The following example skips odd numbers:
+</p>
+
+<pre>
+
+	do !X
+		!Number = !Sample[!X]
+		
+		if ((INT(!Number/2) NE (!Number/2)) then
+			skip
+		endif
+		
+		!Result = !Result + !Number
+	enddo
+
+</pre>
+
+<p>
+The skip if command can sometimes be more convenient:
+</p>
+
+<pre>
+
+	do !X
+		!Number = !Sample[!X]
+
+		skip if (INT(!Number/2) NE (!Number/2))
+		
+		!Result = !Result + !Number
+	enddo
+
+</pre>
+
+
+<h2>
+Nested DO Loops
+</h2>
+
+<p>
+You can nest do-loops one inside the other. 
+The counter for each loop must have a different name.
+</p>
+
+<pre>
+
+	do !X to 10
+	do !Y
+		!Z = !X + !Y
+		break if (!Y GT 5)
+	enddo
+	enddo
+
+</pre>
+
+<p>
+The inner-most loop goes through all the values of !Y 
+before the outer loop moves on to the second value of !X. 
+Note that the break (or skip) command acts just 
+on the loop containing it - in this case the inner-most loop.
+</p>
+
+<h2>
+Jumping to a Labelled Line
+</h2>
+
+<p>
+The golabel command in PML allow you to jump to a line with a matching label name
+</p>
+
+<pre>
+
+	LABEL	/FRED
+	:
+	:
+	GOLABEL /FRED
+
+</pre>
+
+<p>
+The label name /FRED has a maximum length of 16 characters,
+excluding the / slash which must be present. 
+The next line to be executed will be the line following LABEL /FRED,
+which could be before or after the GOLABEL command.
+
+Conditional Jumping to a Labelled Line
+</p>
+
+<pre>
+
+	do !A
+	do !B to 3
+		!C = !A * !B
+
+		golabel /finished if (!C GT 100)
+		
+		!Total = !Total + !C
+	enddo
+	enddo
+
+	label	/finished
+
+	$P Total is $!Total
+
+</pre>
+
+<p>
+If the expression !C GT 100 is TRUE there will be a jump to LABEL /FINISHED 
+and PML execution will continue with the line
+</p>
+
+<pre>
+
+	$P Total is $!Total
+
+</pre>
+
+<p>
+If the expression is FALSE, PML execution will continue with the line:
+</p>
+
+<pre>
+
+	!Total = !Total + !C
+
+</pre>
+
+
+<h2>
+Illegal Jumping
+</h2>
+
+<p>
+The following is an illegal jump into a nested do block.
+It is however permitted to jump out of a nested block to a line in an enclosing block.
+</p>
+
+<pre>
+
+	golabel /illegaL
+
+	do !Count to 5
+		!Total = !Total + !Count
+		label /illegal
+	enddo
+
+</pre>
+
+</body>
+</html>
