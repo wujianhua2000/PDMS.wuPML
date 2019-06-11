@@ -28,10 +28,10 @@ define function !!wuXmlIndexPoint( !name is string, !idx is real, !point is posi
 	!ptz = !point.up
 
 	!result =			'<'  + !name + '>'  
+	!result = !result + !idx.string() + ','
 	!result = !result + !ptx.string() + ','
 	!result = !result + !pty.string() + ','
-	!result = !result + !ptz.string() + ','
-	!result = !result + !idx.string()	
+	!result = !result + !ptz.string()
 	!result = !result + '</' + !name + '>' 
 
 	return !result
