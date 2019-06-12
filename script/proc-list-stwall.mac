@@ -1,0 +1,125 @@
+
+--	...........................................................................
+--	2019-06-11 16:36, tian-an 601, wujianhua
+--	rev.1
+--
+--	根据 GWALL 的改写而成。
+--
+--
+--	...........................................................................
+
+!this		= !!CE
+!currENT	= !!CE
+
+!X = 1
+
+do !X
+	--	直到 SITE 层
+	break	if ( !this.type  EQ  'SITE' )
+--	break	if ( !this.type  EQ  'ZONE' )
+
+	!!CE	= !!CE.owner
+	!this	= !!CE
+
+enddo
+
+--	............................................................................
+
+VAR !listwall COLL ALL	stwall	FOR CE  
+
+--	Q VAR !wallist
+
+!pathname = |D:\123-PDMS|
+
+!swriter = object FILE(  !pathname + '\pdms-listing-stwall.xml' )
+!swriter.open( 'WRITE' )
+
+!swriter.writerecord( '<?xml version="1.0" encoding="utf-8" ?>' )
+!swriter.writerecord( '<ListLineWall>' )
+
+do  !nname  values  !listwall
+
+	!entity	= !nname.DBREF()
+
+	--	如何定位到上级有 position， orientation
+	!vatiET	= !entity.owner
+	
+	!zeroPT = !entity.position.wrt( world )
+	!orient = !entity.orientation.wrt( world )
+
+	--	!zeroPT = !vatiET.position.wrt( world )
+	--	!orient = !vatiET.orientation.wrt( world )
+
+	$(
+	!zeroPT = !entity.position.wrt( world )
+	!orient = !entity.orientation.wrt( world )
+
+	!pnt1	= !entity.posstart.wrt( world )
+	!pnt2	= !entity.posend.wrt( world )
+	!vect1	= !entity.drnstart.wrt( world )
+	!vect2	= !entity.drnend.wrt( world )
+	$)
+
+	!pnt1	= !entity.posstart
+	!pnt2	= !entity.posend
+	!vect1	= !entity.drnstart
+	!vect2	= !entity.drnend
+
+	!swriter.writerecord( '<LineWall>'		)
+	
+	!swriter.writerecord( !!wuXmlString(		|Name|, 		!entity.name 			) )
+	!swriter.writerecord( !!wuXmlString(		|RefNo|, 		!entity.RefNo.String()	) )
+	!swriter.writerecord( !!wuXmlString(		|Type|, 		!entity.Type		 	) )
+	!swriter.writerecord( !!wuXmlString(		|Vati-Name|, 	!entity.owner.name		) )
+	!swriter.writerecord( !!wuXmlString(		|Vati-Type|, 	!entity.owner.type		) )
+	
+	!swriter.writerecord( !!wuXmlPoint(			|Position|,		!zeroPT					) )
+	!swriter.writerecord( !!wuXmlOrientation(	|Orientation|,	!orient					) )
+	
+	!swriter.writerecord( !!wuXmlPoint(			|Point1|,		!pnt1					) )
+	!swriter.writerecord( !!wuXmlPoint(			|Point2|,		!pnt2					) )
+	!swriter.writerecord( !!wuXmlDirection( 	|Vector1|,		!vect1					) )
+	!swriter.writerecord( !!wuXmlDirection( 	|Vector2|,		!vect2					) )
+
+	!swriter.writerecord( !!wuXmlDouble( 		|BetaAngle|,	!entity.bangle			) )
+	
+	--.....................................................
+	--
+	!listparm = !entity.desparam
+
+	!swriter.writerecord( '<Parameters>' )
+	
+	do  !parm  values  !listparm
+	!swriter.writerecord( !!wuXmlDouble(		|Value|,		!parm					) )
+	enddo
+	
+	!swriter.writerecord( '</Parameters>' )
+
+	--.....................................................
+
+	!swriter.writerecord( '<Ref-Spec>' )
+	!swriter.writerecord( '<Ref-Cate>' )
+
+	!!wuXmlRefGmss( !entity, !swriter )
+	!!wuXmlRefPtss( !entity, !swriter )
+	!!wuXmlRefData( !entity, !swriter )
+
+	!swriter.writerecord( '</Ref-Cate>' )
+	!swriter.writerecord( '</Ref-Spec>' )
+	
+	--.....................................................
+
+	!swriter.writerecord( '</LineWall>' )
+
+	--.....................................................
+
+enddo
+
+!swriter.writerecord( '</ListLineWall>' )
+!swriter.close( )
+
+--	............................................................................
+
+!!CE	= !currENT
+
+

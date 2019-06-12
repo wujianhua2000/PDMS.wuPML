@@ -29,23 +29,23 @@ define function !!wuXmlVector( !name is string, !vect is Orientation ) is string
 
 	!result =			|<| + !name + |>|  
 	
-	!result = !result + |<xline>|
+	!result = !result + |<AxisX>|
 	!result = !result + !lnx.east.string()	+ |,|
 	!result = !result + !lnx.north.string() + |,| 
 	!result = !result + !lnx.up.string()
-	!result = !result + |</xline>|
+	!result = !result + |</AxisX>|
 
-	!result = !result + |<yline>|
+	!result = !result + |<AxisY>|
 	!result = !result + !lny.east.string()  + |,| 
 	!result = !result + !lny.north.string() + |,| 
 	!result = !result + !lny.up.string()
-	!result = !result + |</yline>|
+	!result = !result + |</AxisY>|
 
-	!result = !result + |<zline>|
+	!result = !result + |<AxisZ>|
 	!result = !result + !lnz.east.string()  + |,| 
 	!result = !result + !lnz.north.string() + |,| 
 	!result = !result + !lnz.up.string()
-	!result = !result + |</zline>|
+	!result = !result + |</AxisZ>|
 
 	!result = !result + |</| + !name + |>| 
 

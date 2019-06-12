@@ -9,7 +9,8 @@
 --
 --	...........................................................................
 
-!this	= !!CE
+!this		= !!CE
+!currENT	= !!CE
 
 !X = 1
 
@@ -35,7 +36,7 @@ VAR !listgwall COLL ALL	gwall	FOR CE
 !swriter.open( 'WRITE' )
 
 !swriter.writerecord( '<?xml version="1.0" encoding="utf-8" ?>' )
-!swriter.writerecord( '<listgwall>' )
+!swriter.writerecord( '<ListGWall>' )
 
 do  !nname  values  !listgwall
 
@@ -43,13 +44,13 @@ do  !nname  values  !listgwall
 	!post	= !gwall.position.wrt( world )
 	!vect	= !gwall.orientation.wrt( world )
 
-	!swriter.writerecord( '<gwall>'		)
+	!swriter.writerecord( '<GWall>'		)
 	
-	!swriter.writerecord( !!wuXmlString(	|name|, 		!gwall.name 		) )
-	!swriter.writerecord( !!wuXmlString(	|vati-name|, 	!gwall.owner.name	) )
-	!swriter.writerecord( !!wuXmlString(	|vati-type|, 	!gwall.owner.type	) )
-	!swriter.writerecord( !!wuXmlPoint(	 	|position|,		!post				) )
-	!swriter.writerecord( !!wuXmlVector( 	|orientation|,	!vect				) )
+	!swriter.writerecord( !!wuXmlString(		|Name|, 		!gwall.name 		) )
+	!swriter.writerecord( !!wuXmlString(		|Vati-Name|, 	!gwall.owner.name	) )
+	!swriter.writerecord( !!wuXmlString(		|Vati-Type|, 	!gwall.owner.type	) )
+	!swriter.writerecord( !!wuXmlPoint(	 		|Position|,		!post				) )
+	!swriter.writerecord( !!wuXmlOrientation( 	|Orientation|,	!vect				) )
 	
 	!listsohn = !gwall.members
 
@@ -62,38 +63,38 @@ do  !nname  values  !listgwall
 			!depth		= !ptr.height
 			!listpnts	= !ptr.members
 
-			!swriter.writerecord( !!wuXmlDouble( |height|, !depth ) )
+			!swriter.writerecord( !!wuXmlDouble( |Height|, !depth ) )
 
 			--	...........................................
 			--	局部坐标系下的边界点集合
 			--
-			!swriter.writerecord( '<local-points>'  )
+			!swriter.writerecord( '<Local-Points>'  )
 			
 			!idx = 1
 			do !ptname values !listpnts
 				!ptr	= !ptname
 				!post	= !ptr.position
-				!swriter.writerecord( !!wuXmlIndexPoint( |point|, !idx, !post ) )
+				!swriter.writerecord( !!wuXmlIndexPoint( |Point|, !idx, !post ) )
 				!idx	= !idx + 1
 			enddo
 			
-			!swriter.writerecord( '</local-points>'  )
+			!swriter.writerecord( '</Local-Points>'  )
 
 			--	...........................................
 			--
 			--	GLOBAL 坐标系下的边界点集合
 			--
-			!swriter.writerecord( '<points>'  )
+			!swriter.writerecord( '<Points>'  )
 			
 			!idx = 1
 			do !ptname values !listpnts
 				!ptr	= !ptname
 				!post	= !ptr.position.wrt( world )
-				!swriter.writerecord( !!wuXmlIndexPoint( |point|, !idx, !post ) )
+				!swriter.writerecord( !!wuXmlIndexPoint( |Point|, !idx, !post ) )
 				!idx	= !idx + 1
 			enddo
 			
-			!swriter.writerecord( '</points>'  )
+			!swriter.writerecord( '</Points>'  )
 			
 			--	...........................................
 			
@@ -101,11 +102,14 @@ do  !nname  values  !listgwall
 	
 	enddo
 
-	!swriter.writerecord( '</gwall>' )
+	!swriter.writerecord( '</GWall>' )
 
 enddo
 
-!swriter.writerecord( '</listgwall>' )
+!swriter.writerecord( '</ListGWall>' )
 !swriter.close( )
 
 --	............................................................................
+
+!!CE	= !currENT
+

@@ -34,23 +34,23 @@ define function !!wuXmlOrientation( !name is string, !vect is Orientation ) is s
 
 	!result =			|<| + !name + |>|  
 	
-	!result = !result + |<lineX>|
+	!result = !result + |<AxisX>|
 	!result = !result + !lnx.east.string()	+ |,|
 	!result = !result + !lnx.north.string() + |,| 
 	!result = !result + !lnx.up.string()
-	!result = !result + |</lineX>|
+	!result = !result + |</AxisX>|
 
-	!result = !result + |<lineY>|
+	!result = !result + |<AxisY>|
 	!result = !result + !lny.east.string()  + |,| 
 	!result = !result + !lny.north.string() + |,| 
 	!result = !result + !lny.up.string()
-	!result = !result + |</lineY>|
+	!result = !result + |</AxisY>|
 
-	!result = !result + |<lineZ>|
+	!result = !result + |<AxisZ>|
 	!result = !result + !lnz.east.string()  + |,| 
 	!result = !result + !lnz.north.string() + |,| 
 	!result = !result + !lnz.up.string()
-	!result = !result + |</lineZ>|
+	!result = !result + |</AxisZ>|
 
 	!result = !result + |</| + !name + |>| 
 
