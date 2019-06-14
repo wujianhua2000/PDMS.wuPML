@@ -42,23 +42,14 @@ do  !nname  values  !listwall
 	!entity	= !nname.DBREF()
 
 	--	如何定位到上级有 position， orientation
-	!vatiET	= !entity.owner
-	
-	!zeroPT = !entity.position.wrt( world )
-	!orient = !entity.orientation.wrt( world )
+	--	当前 entity 的 orientation 中记录了上级（父节点）的原点来源
+	--	记录父节点坐标系的目的是为了以后制图的时候，方便在一个合适的坐标系内进行计算。
+	--	比如：角度，间距等等。
+	--
+	!vatiET = !entity.orientation.origin
 
-	--	!zeroPT = !vatiET.position.wrt( world )
-	--	!orient = !vatiET.orientation.wrt( world )
-
-	$(
-	!zeroPT = !entity.position.wrt( world )
-	!orient = !entity.orientation.wrt( world )
-
-	!pnt1	= !entity.posstart.wrt( world )
-	!pnt2	= !entity.posend.wrt( world )
-	!vect1	= !entity.drnstart.wrt( world )
-	!vect2	= !entity.drnend.wrt( world )
-	$)
+	!zeroPT = !vatiET.position.wrt( world )
+	!orient = !vatiET.orientation.wrt( world )
 
 	!pnt1	= !entity.posstart
 	!pnt2	= !entity.posend
@@ -81,7 +72,11 @@ do  !nname  values  !listwall
 	!swriter.writerecord( !!wuXmlDirection( 	|Vector1|,		!vect1					) )
 	!swriter.writerecord( !!wuXmlDirection( 	|Vector2|,		!vect2					) )
 
-	!swriter.writerecord( !!wuXmlDouble( 		|BetaAngle|,	!entity.bangle			) )
+	!swriter.writerecord( !!wuXmlDouble( 		|BetaAngle|,				!entity.bangle		) )
+
+	!swriter.writerecord( !!wuXmlString(		|Joining-Line|,				!entity.jline		) )
+	!swriter.writerecord( !!wuXmlString(		|Justification-Pline|,		!entity.jusline		) )
+	!swriter.writerecord( !!wuXmlString(		|Section-Line|,				!entity.memline		) )
 	
 	--.....................................................
 	--
