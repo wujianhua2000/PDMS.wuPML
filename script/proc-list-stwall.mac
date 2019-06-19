@@ -47,6 +47,12 @@ do  !nname  values  !listwall
 	--	比如：角度，间距等等。
 	--
 	!vatiET = !entity.orientation.origin
+<<<<<<< HEAD
+=======
+
+	!zeroPT = !vatiET.position.wrt( world )
+	!orient = !vatiET.orientation.wrt( world )
+>>>>>>> 63020c8a1e1c6dc8ca873a28a627d1f476566645
 
 	!zeroPT = !vatiET.position.wrt( world )
 	!orient = !vatiET.orientation.wrt( world )
@@ -70,6 +76,11 @@ do  !nname  values  !listwall
 
 	!swriter.writerecord( !!wuXmlDouble( 		|BetaAngle|,				!entity.bangle		) )
 
+<<<<<<< HEAD
+=======
+	!swriter.writerecord( !!wuXmlDouble( 		|BetaAngle|,				!entity.bangle		) )
+
+>>>>>>> 63020c8a1e1c6dc8ca873a28a627d1f476566645
 	!swriter.writerecord( !!wuXmlString(		|Joining-Line|,				!entity.jline		) )
 	!swriter.writerecord( !!wuXmlString(		|Justification-Pline|,		!entity.jusline		) )
 	!swriter.writerecord( !!wuXmlString(		|Section-Line|,				!entity.memline		) )
