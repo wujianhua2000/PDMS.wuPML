@@ -1,0 +1,46 @@
+
+------------------------------------------------------------------------
+--
+-- (c) Copyright  2017 to Current Year, Wu JianHua
+--
+-- File:            .pmlfnc
+--   Type:          Function Definition
+--   Group:         
+--     Keyword:     
+--   Module:        
+--   Replaces:
+--
+-- Description:
+-- 
+--
+------------------------------------------------------------------------
+--
+-- Function Type:   Function/Procedure
+--
+------------------------------------------------------------------------
+-- GMSS
+-- 
+-- 
+define function !!wuXmlEntityCartesian( !entity is dbref, !fileptr is FILE )
+
+	if ( unset( !entity		 				) ) then
+	return
+	endif
+
+	if ( unset( !fileptr	 				) ) then
+	return
+	endif
+
+	!vatiET = !entity.orientation.origin
+
+	!zeroPT = !vatiET.position.wrt( world )
+	!orient = !vatiET.orientation.wrt( world )
+	
+	!swriter.writerecord( !!wuXmlPoint(			|Original|,		!zeroPT					) )
+	!swriter.writerecord( !!wuXmlOrientation(	|Orientation|,	!orient					) )
+
+--	!swriter.writerecord( !!wuXmlPoint(			|Position|,		!post					) )
+
+	return
+
+endfunction
