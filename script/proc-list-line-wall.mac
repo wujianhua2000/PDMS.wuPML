@@ -31,7 +31,7 @@ VAR !listwall COLL ALL	stwall	FOR CE
 
 !pathname = |D:\123-PDMS|
 
-!swriter = object FILE(  !pathname + '\pdms-listing-stwall.xml' )
+!swriter = object FILE(  !pathname + '\pdms-listing-line-wall.xml' )
 !swriter.open( 'WRITE' )
 
 !swriter.writerecord( '<?xml version="1.0" encoding="utf-8" ?>' )
@@ -41,27 +41,13 @@ do  !nname  values  !listwall
 
 	!entity	= !nname.DBREF()
 
-	--	如何定位到上级有 position， orientation
-	--	当前 entity 的 orientation 中记录了上级（父节点）的原点来源
-	--	记录父节点坐标系的目的是为了以后制图的时候，方便在一个合适的坐标系内进行计算。
-	--	比如：角度，间距等等。
-	--
-	!vatiET = !entity.orientation.origin
-
-	!zeroPT = !vatiET.position.wrt( world )
-	!orient = !vatiET.orientation.wrt( world )
-
 	!swriter.writerecord( '<LineWall>'		)
 	
-	!swriter.writerecord( !!wuXmlString(		|Name|, 		!entity.name 			) )
-	!swriter.writerecord( !!wuXmlString(		|RefNo|, 		!entity.RefNo.String()	) )
-	!swriter.writerecord( !!wuXmlString(		|Type|, 		!entity.Type		 	) )
+	!!wuXmlEntityBasic(			!entity,	!swriter	)
+
 	!swriter.writerecord( !!wuXmlString(		|Gene-Type|,	!entity.GType		 	) )
-	!swriter.writerecord( !!wuXmlString(		|Vati-Name|, 	!entity.owner.name		) )
-	!swriter.writerecord( !!wuXmlString(		|Vati-Type|, 	!entity.owner.type		) )
-	
-	!swriter.writerecord( !!wuXmlPoint(			|Position|,		!zeroPT					) )
-	!swriter.writerecord( !!wuXmlOrientation(	|Orientation|,	!orient					) )
+
+	!!wuXmlEntityCartesian(		!entity,	!swriter	)
 	
 	!swriter.writerecord( !!wuXmlPoint(			|Point1|,		!entity.posstart		) )
 	!swriter.writerecord( !!wuXmlPoint(			|Point2|,		!entity.posend			) )
@@ -74,18 +60,20 @@ do  !nname  values  !listwall
 	!swriter.writerecord( !!wuXmlString(		|Justification-Pline|,		!entity.jusline		) )
 	!swriter.writerecord( !!wuXmlString(		|Section-Line|,				!entity.memline		) )
 	
+	!!wuXmlDesignParameters(	!entity,	!swriter	)
+
 	--.....................................................
 	--
-	!listparm = !entity.desparam
-
-	!swriter.writerecord( '<Parameters>' )
-	
-	do  !parm  values  !listparm
-	!swriter.writerecord( !!wuXmlDouble(		|Value|,		!parm					) )
-	enddo
-	
-	!swriter.writerecord( '</Parameters>' )
-
+--	!listparm = !entity.desparam
+--
+--	!swriter.writerecord( '<Parameters>' )
+--	
+--	do  !parm  values  !listparm
+--	!swriter.writerecord( !!wuXmlDouble(		|Value|,		!parm					) )
+--	enddo
+--	
+--	!swriter.writerecord( '</Parameters>' )
+--
 	--.....................................................
 
 	!swriter.writerecord( '<Ref-Spec>' )

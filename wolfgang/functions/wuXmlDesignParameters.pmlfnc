@@ -21,7 +21,7 @@
 -- GMSS
 -- 
 -- 
-define function !!wuXmlEntityCartesian( !entity is dbref, !fileptr is FILE )
+define function !!wuXmlDesignParameters( !entity is dbref, !fileptr is FILE )
 
 	if ( unset( !entity		 				) ) then
 	return
@@ -31,20 +31,13 @@ define function !!wuXmlEntityCartesian( !entity is dbref, !fileptr is FILE )
 	return
 	endif
 
-	--	如何定位到上级有 position， orientation
-	--	当前 entity 的 orientation 中记录了上级（父节点）的原点来源
-	--	记录父节点坐标系的目的是为了以后制图的时候，方便在一个合适的坐标系内进行计算。
-	--	比如：角度，间距等等。
-	--
-	!vatiET = !entity.orientation.origin
-
-	!zeroPT = !vatiET.position.wrt( world )
-	!orient = !vatiET.orientation.wrt( world )
+	!fileptr.writerecord( '<Parameters>' )
 	
-	!fileptr.writerecord( !!wuXmlPoint(			|Original|,		!zeroPT					) )
-	!fileptr.writerecord( !!wuXmlOrientation(	|Orientation|,	!orient					) )
-
---	!fileptr.writerecord( !!wuXmlPoint(			|Position|,		!post					) )
+	do  !parm  values  !entity.desparam
+		!fileptr.writerecord( !!wuXmlDouble(	|Value|,	!parm	) )
+	enddo
+	
+	!fileptr.writerecord( '</Parameters>' )
 
 	return
 
